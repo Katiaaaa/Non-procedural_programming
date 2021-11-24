@@ -1,66 +1,48 @@
 --Лабораторна робота №3
 -- Виконала студентка групи КН-31 Валько Катерина
 
--- 1.1 Послiдовнiсть тотожних елементiв списку замiнити одним елементом,
--- напр.: [1,1,1,5,5,3, 1,1,222,222,222,222] ⇒ [1,5,3,1,222].
+-- 1.1 Переписати список справа наліво.
 
 -- а) без застосування 
-headCustom :: [a] -> a
-headCustom (x:xs) = x
+reverse1 :: [a] -> [a]
+reverse1 [] = []
+reverse1 [x] = [x]
+reverse1 (x:xs) = reverse1 xs++ [x]
 
-func :: Eq a => [a] -> [a]
-func [] = []
-func [x] = [x]
-func (x:xs) = if x == headCustom xs
-                    then func xs
-                    else x : func xs
+-- б) з застосуванням вбудованих функцiй.
+reverses :: [a] -> [a]
+reverses = reverse
+
+-- Test
+-- input: [1,2,3,4]
+-- [4,3,2,1]
+
+-- input: [4,5]
+-- [5,4]
+
+
+
+-- 2.1 Перемішування списку з n елементів: після першого розмістити останній,
+-- після другого передостанній тощо. Наприклад вхідний список "abcde1234" має бути
+-- трансформований у "a4b3c2d1e"
+
+-- а) без застосування 
+mix :: [a] -> [a]
+mix [] = []
+mix [x] = [x]
+mix (x:xs) = [x] ++ mix(changes xs)
 
 
 -- б) з застосуванням вбудованих функцiй.
-func2 :: Eq a => [a] -> [a]
-func2 [] = []
-func2 [x] = [x]
-func2 (x:xs)
-            | x == head xs = func2 xs
-            | otherwise = x : func2 xs
-
-removeDuplicates2 :: Eq a => [a] -> [a]
-removeDuplicates2 = foldl (\seen x -> if x `elem` seen
-                                      then seen
-                                      else seen ++ [x]) []
--- Test
--- input: [1,1,1,2,4,8,8,99,99]
--- [1,2,4,8,99]
-
--- input: [99, 99, 88, 88, 77]
--- [1,2,55,888]
-
-
-
--- 2.1 Визначити, чи два числа взаємно простi.
-
--- а) без застосування 
-euclid :: Integer -> Integer -> Integer
-euclid n m
-  | n == m = n
-  | n < m = euclid n (m-n)
-  | otherwise = euclid (n-m) m
-
-func3 :: Integer -> Integer -> Bool
-func3 x y = euclid x y == 1
-
-
--- б) з застосуванням вбудованих функцiй.
-func4 :: Integer -> Integer -> Bool
-func4 x y = gcd x y == 1
+mix2 :: [a] -> [a]
+mix2 [] = []
+mix2 [x] = [x] 
+mix2 (x:xs) = [x] ++ mix2(reverse xs)  
 
 
 -- Test
--- input: 3 9
--- False
-
--- input: 10 17
--- True
+-- input: [1,2,3,4,5,6,7]
+-- [1,7,2,6,3,5,4]
 
 -- Висновок
 -- На даній лабораторній роботі ми навчилися використовувати функції вищих порядків в мови Haskell.
